@@ -17,7 +17,8 @@ router.post("/register", async (req, res) => {
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
   //Create a new user
   const user = new User({
-    name: req.body.name,
+    first_name: req.body["first_name"],
+    last_name: req.body["last_name"],
     email: req.body.email,
     password: hashedPassword,
   });
@@ -44,7 +45,7 @@ router.post("/login", async (req, res) => {
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
   res.header("auth-token", token).send(token);
 
-  res.send("Logged in!");
+  // res.send("Logged in!");
 });
 
 module.exports = router;
